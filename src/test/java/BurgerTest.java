@@ -84,4 +84,5 @@ public class BurgerTest {
                 "(==== " + bun.getName() + " ====)\r\n" + "\r\n" + "Price: " + String.format("%f%n", burger.getPrice());
         assertEquals(expectedReceipt, actualReceipt);
     }
+
 }
