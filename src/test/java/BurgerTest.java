@@ -1,19 +1,13 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import static org.junit.Assert.*;
-import static praktikum.IngredientType.*;
 
-@RunWith(Parameterized.class)
+@RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
 
     @Mock
@@ -26,44 +20,18 @@ public class BurgerTest {
     Ingredient filling;
 
     Burger burger;
-    private final String bunName;
-    private final float bunPrice;
-    private final String sauceName;
-    private final float saucePrice;
-    private final String fillingName;
-    private final float fillingPrice;
-    private final float priceSum;
-
-    public BurgerTest(String bunName, float bunPrice, String sauceName, float saucePrice, String fillingName, float fillingPrice, float priceSum) {
-        this.bunName = bunName;
-        this.bunPrice = bunPrice;
-        this.sauceName = sauceName;
-        this.saucePrice = saucePrice;
-        this.fillingName = fillingName;
-        this.fillingPrice = fillingPrice;
-        this.priceSum = priceSum;
-    }
 
     @Before
     public void setUp() {
         burger = new Burger();
-        MockitoAnnotations.initMocks(this);
-        Mockito.when(bun.getName()).thenReturn(bunName);
-        Mockito.when(bun.getPrice()).thenReturn(bunPrice);
-        Mockito.when(sauce.getName()).thenReturn(sauceName);
-        Mockito.when(sauce.getType()).thenReturn(SAUCE);
-        Mockito.when(sauce.getPrice()).thenReturn(saucePrice);
-        Mockito.when(filling.getName()).thenReturn(fillingName);
-        Mockito.when(filling.getType()).thenReturn(FILLING);
-        Mockito.when(filling.getPrice()).thenReturn(fillingPrice);
-    }
-
-    @Parameterized.Parameters(name = "Тестовые данные: {0} {1}")
-    public static Collection<Object[]> getPrice() {
-        return Arrays.asList(new Object[][]{
-                {"Black Bun", 100f, "Hot Sauce", 100f, "Cutlet", 100f, 400f},
-                {"White Bun", 200f, "Sour Cream", 200f, "Dinosaur", 200f, 800f}
-        });
+        Mockito.when(bun.getName()).thenReturn("black bun");
+        Mockito.when(bun.getPrice()).thenReturn(100f);
+        Mockito.when(sauce.getName()).thenReturn("sour cream");
+        Mockito.when(sauce.getType()).thenReturn(IngredientType.SAUCE);
+        Mockito.when(sauce.getPrice()).thenReturn(200f);
+        Mockito.when(filling.getName()).thenReturn("sausage");
+        Mockito.when(filling.getType()).thenReturn(IngredientType.FILLING);
+        Mockito.when(filling.getPrice()).thenReturn(300f);
     }
 
     @Test
@@ -99,7 +67,7 @@ public class BurgerTest {
         burger.addIngredient(sauce);
         burger.addIngredient(filling);
         float expectedPrice = burger.getPrice();
-        assertEquals(expectedPrice, priceSum, 1);
+        assertEquals(expectedPrice, 700, 1);
     }
 
     @Test
